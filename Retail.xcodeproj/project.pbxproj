@@ -16,6 +16,7 @@
 		93030F54291ACB0300B02C5A /* RetailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93030F53291ACB0300B02C5A /* RetailTests.swift */; };
 		93030F5E291ACB0300B02C5A /* RetailUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93030F5D291ACB0300B02C5A /* RetailUITests.swift */; };
 		93030F60291ACB0300B02C5A /* RetailUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93030F5F291ACB0300B02C5A /* RetailUITestsLaunchTests.swift */; };
+		93030F6D291AEAD900B02C5A /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93030F6C291AEAD900B02C5A /* Helper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		93030F59291ACB0300B02C5A /* RetailUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RetailUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		93030F5D291ACB0300B02C5A /* RetailUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailUITests.swift; sourceTree = "<group>"; };
 		93030F5F291ACB0300B02C5A /* RetailUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		93030F6C291AEAD900B02C5A /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			children = (
 				93030F3C291ACAFE00B02C5A /* AppDelegate.swift */,
 				93030F3E291ACAFE00B02C5A /* SceneDelegate.swift */,
+				93030F6C291AEAD900B02C5A /* Helper.swift */,
 				93030F40291ACAFE00B02C5A /* ViewController.swift */,
 				93030F42291ACAFE00B02C5A /* Main.storyboard */,
 				93030F45291ACB0200B02C5A /* Assets.xcassets */,
@@ -261,6 +264,7 @@
 				93030F41291ACAFE00B02C5A /* ViewController.swift in Sources */,
 				93030F3D291ACAFE00B02C5A /* AppDelegate.swift in Sources */,
 				93030F3F291ACAFE00B02C5A /* SceneDelegate.swift in Sources */,
+				93030F6D291AEAD900B02C5A /* Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,8 +447,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -452,9 +456,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = soma.group.test.Retail;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -471,8 +478,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -480,9 +487,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = soma.group.test.Retail;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
