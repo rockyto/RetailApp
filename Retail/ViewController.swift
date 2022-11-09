@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var textFieldsView: UIView!
     @IBOutlet weak var SubViewLogin: UIView!
     
-    
+    let helper = Helper()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +73,67 @@ class ViewController: UIViewController {
         textFieldsView.layer.shadowOffset = CGSize(width: 0, height: 1.0)
         textFieldsView.layer.shadowOpacity = 0.2
         textFieldsView.layer.shadowRadius = 8.0
+        
+    }
+    
+    func LoginRetail(){
+        
+        let url = URL(string: helper.host+"login")!
+        
+        let body = helper.BodyLogin(usr: txtUserLogin.text!, psswd: txtPsswdLogin.text!)
+        print(body)
+        var request = URLRequest(url: url)
+        request.httpBody = body.data(using: .utf8)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            
+            DispatchQueue.main.async { [self] in
+                
+                if error != nil{
+                    
+                    helper.showAlert(title: "Error de servidor", message: error!.localizedDescription, in: self)
+                    return
+                    
+                }
+                do{
+                    guard let data = data else {
+
+                        helper.showAlert(title: "Error de datos", message: error!.localizedDescription, in: self)
+                        return
+
+                    }
+                    
+                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
+                    
+                    guard let parsedJSON = json else{
+                        
+                        print("Error de parseo")
+                        return
+                        
+                    }
+                    
+                    if parsedJSON["status"] as! String == "202"{
+                        
+                        UserDefaults.standard.set(parsedJSON["accessToken"], forKey: "token")
+                        UserDefaults.standard.synchronize()
+                    
+                    }
+                    
+                    print(json!)
+                }catch{
+                    helper.showAlert(title: "Error", message: error.localizedDescription, in: self)
+                }
+            }
+        }.resume()
+       
+    }
+    
+    @IBAction func LoginRetail(sender: AnyObject){
+        
+        LoginRetail()
         
     }
     

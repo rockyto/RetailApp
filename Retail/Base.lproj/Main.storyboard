@@ -30,6 +30,9 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="gray" title="Iniciar sesión"/>
+                                        <connections>
+                                            <action selector="LoginRetailWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ruO-H9-Pix"/>
+                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UJy-gY-O7M" userLabel="TextFieldsView">
                                         <rect key="frame" x="9.6666666666666572" y="36" width="368" height="128"/>
@@ -120,6 +123,15 @@
                     <view key="view" contentMode="scaleToFill" id="gbN-QU-eXT">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Retail Corporate" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kVr-g9-3qy">
+                                <rect key="frame" x="28" y="400" width="374" height="133.66666666666666"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="56"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="Q8o-AD-dpb"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>

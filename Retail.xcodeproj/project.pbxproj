@@ -17,6 +17,7 @@
 		93030F5E291ACB0300B02C5A /* RetailUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93030F5D291ACB0300B02C5A /* RetailUITests.swift */; };
 		93030F60291ACB0300B02C5A /* RetailUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93030F5F291ACB0300B02C5A /* RetailUITestsLaunchTests.swift */; };
 		93030F6D291AEAD900B02C5A /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93030F6C291AEAD900B02C5A /* Helper.swift */; };
+		93723E50291C3728000FD5AC /* InicioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93723E4F291C3728000FD5AC /* InicioViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		93030F5D291ACB0300B02C5A /* RetailUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailUITests.swift; sourceTree = "<group>"; };
 		93030F5F291ACB0300B02C5A /* RetailUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		93030F6C291AEAD900B02C5A /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		93723E4F291C3728000FD5AC /* InicioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InicioViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				93030F3E291ACAFE00B02C5A /* SceneDelegate.swift */,
 				93030F6C291AEAD900B02C5A /* Helper.swift */,
 				93030F40291ACAFE00B02C5A /* ViewController.swift */,
+				93723E4F291C3728000FD5AC /* InicioViewController.swift */,
 				93030F42291ACAFE00B02C5A /* Main.storyboard */,
 				93030F45291ACB0200B02C5A /* Assets.xcassets */,
 				93030F47291ACB0200B02C5A /* LaunchScreen.storyboard */,
@@ -264,6 +267,7 @@
 				93030F41291ACAFE00B02C5A /* ViewController.swift in Sources */,
 				93030F3D291ACAFE00B02C5A /* AppDelegate.swift in Sources */,
 				93030F3F291ACAFE00B02C5A /* SceneDelegate.swift in Sources */,
+				93723E50291C3728000FD5AC /* InicioViewController.swift in Sources */,
 				93030F6D291AEAD900B02C5A /* Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
