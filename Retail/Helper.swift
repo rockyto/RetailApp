@@ -54,6 +54,27 @@ class Helper{
         
     }
     
+    func instantiateViewController(identifier: String, animated: Bool, by vc: UIViewController, completion: (() -> Void)?){
+        
+        let nuevoViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: identifier)
+        
+        nuevoViewController.modalPresentationStyle = .custom
+        vc.present(nuevoViewController, animated: animated, completion: completion)
+    }
+    
+    func convierteStringEnFechaString(laFecha: String) -> String{
+        let fecha = laFecha
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let fechaString = dateFormatter.date(from: fecha)
+        
+        let formatterShow = DateFormatter()
+        formatterShow.dateFormat = "EEEE dd MMMM yyyy"
+        let fechaFinal = formatterShow.string(from: fechaString!)
+        let fechaCita = fechaFinal
+        return fechaCita
+    }
+    
 }
 
 

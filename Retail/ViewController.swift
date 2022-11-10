@@ -114,17 +114,31 @@ class ViewController: UIViewController {
                         return
                         
                     }
-                    
-                    if parsedJSON["status"] as! String == "202"{
+                   
+                    switch parsedJSON["status"] as! String {
+                        
+                    case "202" :
                         
                         UserDefaults.standard.set(parsedJSON["accessToken"], forKey: "token")
                         UserDefaults.standard.synchronize()
-                    
+                        
+                        helper.instantiateViewController(identifier: "vistaInicio", animated: true, by: self, completion: nil)
+                        break
+                        
+                        
+                        
+                    default:
+                        
+                        helper.showAlert(title: "Error", message: parsedJSON["message"] as! String, in: self)
+                        
                     }
                     
                     print(json!)
+                    
                 }catch{
+                    
                     helper.showAlert(title: "Error", message: error.localizedDescription, in: self)
+                    
                 }
             }
         }.resume()

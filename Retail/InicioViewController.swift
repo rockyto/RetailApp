@@ -7,23 +7,69 @@
 
 import UIKit
 
-class InicioViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+class InicioViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ConsultaModeloProtocol {
+    
+    var feedItems = [DetallesConsulta]()
+    
+    var selectDato : DetallesConsulta = DetallesConsulta()
+    
+    @IBOutlet var ConsutaListas: UITableView!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.ConsutaListas.reloadData()
+        self.ConsutaListas.delegate = self
+        self.ConsutaListas.dataSource = self
+        
+        let consultaModelo = ConsultaModelo()
+        consultaModelo.ElDelegado = self
+        consultaModelo.downloadConsulta()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
+        
+        self.ConsutaListas.reloadData()
+        self.ConsutaListas.delegate = self
+        self.ConsutaListas.dataSource = self
+        
+        let consultaModelo = ConsultaModelo()
+        consultaModelo.ElDelegado = self
+        consultaModelo.downloadConsulta()
+        
     }
-    */
-
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return feedItems.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "celdaDetalles", for: indexPath) as! ConsultaTableViewCell
+        let item : DetallesConsulta = feedItems[indexPath.row]
+        
+        cell.lblVenta!.text = item.VentaTotal
+        cell.lblSucursal!.text = item.Sucursal
+        cell.lblTicketProm!.text = item.TicketPromedio
+        return cell
+        
+    }
+    
+    func itemConsulta(LaConsulta: [DetallesConsulta]) {
+        feedItems = LaConsulta
+        self.ConsutaListas.reloadData()
+    }
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
