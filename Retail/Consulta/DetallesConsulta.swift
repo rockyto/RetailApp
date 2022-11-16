@@ -13,7 +13,7 @@ class DetallesConsulta: NSObject {
     var Sucursal: String?
     var Suc: String?
     var VentaTotal: String?
-    var NoFolios: Int64?
+    var NoFolios: Int?
     var Piezas: String?
     var PzaxTicket: String?
     var TicketPromedio: String?
@@ -22,12 +22,12 @@ class DetallesConsulta: NSObject {
         
     }
     
-    init(Fecha: String, Sucursal: String, Suc: String, VentaTotal: String, NoFolios: Int64, Piezas: String, PzaxTicket: String, TicketPromedio: String){
+    init(Fecha: String, Sucursal: String, Suc: String, VentaTotal: String, NoFolios: Int, Piezas: String, PzaxTicket: String, TicketPromedio: String){
         self.Fecha = Fecha
         self.Sucursal = Sucursal
         self.Suc = Suc
         self.VentaTotal = VentaTotal
-        self.NoFolios = NoFolios
+        self.NoFolios = Int(NoFolios)
         self.Piezas = Piezas
         self.PzaxTicket = PzaxTicket
         self.TicketPromedio = TicketPromedio

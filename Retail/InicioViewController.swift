@@ -58,6 +58,26 @@ class InicioViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     
+    func tableView(_ tableView:UITableView, didSelectRowAt indexPath: IndexPath){
+        
+        let detalle: DetalleViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetalleViewController") as! DetalleViewController
+        
+        let item:DetallesConsulta = feedItems[indexPath.row]
+        
+        detalle.TicketPromedio = "$"+item.TicketPromedio!
+        detalle.Fecha = item.Fecha!
+        detalle.Sucursal = item.Sucursal!
+        
+        detalle.NoFolios = String(Int(item.NoFolios!))
+        
+        var laVenta:String = item.VentaTotal!
+        detalle.VentaTotal = "$"+String(Float(laVenta)!)
+        
+    
+        self.navigationController?.pushViewController(detalle, animated: true)
+        
+    }
+    
     func itemConsulta(LaConsulta: [DetallesConsulta]) {
         feedItems = LaConsulta
         self.ConsutaListas.reloadData()

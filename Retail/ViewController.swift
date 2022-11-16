@@ -17,12 +17,27 @@ class ViewController: UIViewController {
     @IBOutlet weak var textFieldsView: UIView!
     @IBOutlet weak var SubViewLogin: UIView!
     
+   
+    
+    
     let helper = Helper()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
- 
+/*
+ titleLabel.text = ""
+ var charIndex = 0.0
+ let titleText = "Retail Fashion Group"
+ for letter in titleText{
+     
+     Timer.scheduledTimer(withTimeInterval: 0.1 * charIndex, repeats: false) { (timer) in
+         self.titleLabel.text?.append(letter)
+     }
+     charIndex += 1
+ }
+ */
+        
         // Do any additional setup after loading the view.
     }
     
@@ -35,15 +50,23 @@ class ViewController: UIViewController {
     
     func configure_loginSubView(){
         
-        SubViewLogin.layer.cornerRadius = 5
-        SubViewLogin.layer.masksToBounds = true
+        SubViewLogin.layer.cornerRadius = 10
+       // SubViewLogin.layer.masksToBounds = true
+        
+        SubViewLogin.layer.shadowColor = UIColor.black.cgColor
+        SubViewLogin.layer.shadowOffset = .zero
+        SubViewLogin.layer.shadowOpacity = 0.2
+        SubViewLogin.layer.shadowRadius = 10.0
+        //SubViewLogin.layer.shadowPath = UIBezierPath(rect: SubViewLogin.bounds).cgPath
+        SubViewLogin.layer.shouldRasterize = true
+        
         
     }
     
     func confBtns(){
         
         btnLogin.layer.cornerRadius = 5
-        SubViewLogin.layer.masksToBounds = true
+        btnLogin.layer.masksToBounds = true
         
     }
     
@@ -51,20 +74,20 @@ class ViewController: UIViewController {
         
         let width = CGFloat(2)
         let color = UIColor.groupTableViewBackground.cgColor
-
+        
         let border = CALayer()
         border.borderWidth = width
         border.borderColor = color
         border.frame = CGRect(x: 0, y: 0, width: textFieldsView.frame.width, height: textFieldsView.frame.height)
-
+        
         let line = CALayer()
         line.borderWidth = width
         line.borderColor = color
         line.frame = CGRect(x: 0, y: textFieldsView.frame.height / 2 - width, width: textFieldsView.frame.width, height: width)
-
+        
         textFieldsView.layer.addSublayer(border)
         textFieldsView.layer.addSublayer(line)
-
+        
         textFieldsView.layer.cornerRadius = 5
         textFieldsView.layer.masksToBounds = true
         
@@ -100,10 +123,10 @@ class ViewController: UIViewController {
                 }
                 do{
                     guard let data = data else {
-
+                        
                         helper.showAlert(title: "Error de datos", message: error!.localizedDescription, in: self)
                         return
-
+                        
                     }
                     
                     let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
@@ -114,7 +137,7 @@ class ViewController: UIViewController {
                         return
                         
                     }
-                   
+                    
                     switch parsedJSON["status"] as! String {
                         
                     case "202" :
@@ -122,7 +145,7 @@ class ViewController: UIViewController {
                         UserDefaults.standard.set(parsedJSON["accessToken"], forKey: "token")
                         UserDefaults.standard.synchronize()
                         
-                        helper.instantiateViewController(identifier: "vistaInicio", animated: true, by: self, completion: nil)
+                        helper.instantiateViewController(identifier: "vistaHome", animated: true, by: self, completion: nil)
                         break
                         
                         
@@ -142,7 +165,7 @@ class ViewController: UIViewController {
                 }
             }
         }.resume()
-       
+        
     }
     
     @IBAction func LoginRetail(sender: AnyObject){
@@ -151,8 +174,8 @@ class ViewController: UIViewController {
         
     }
     
-  
-
-
+    
+    
+    
 }
 

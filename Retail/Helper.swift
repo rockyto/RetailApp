@@ -75,6 +75,109 @@ class Helper{
         return fechaCita
     }
     
+    func formatoFecha(fecha : String) -> Date?{
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "GMT-5")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let date = dateFormatter.date(from: fecha)
+        return date
+    }
+    
+    func DetectaYConvierteFecha()-> String?{
+        
+        let date = Date()
+        // Create Date Formatter
+        let dateFormatter = DateFormatter()
+        // Set Date Format
+        dateFormatter.dateFormat = "EEEE dd MMMM yyyy"
+        // Convert Date to String
+        dateFormatter.string(from: date)
+        let laFecha:String = dateFormatter.string(from: date)
+        return laFecha
+        
+    }
+    
+    func ConvierteDateAString(Fecha: Date) -> String?{
+        let date = Fecha
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMMM yyyy"
+        dateFormatter.string(from:Fecha)
+        let laFecha:String = dateFormatter.string(from: date)
+        return laFecha
+    }
+    
+    func SubstractOneYear()-> String?{
+        
+        /**
+         let date = Date()
+         let dateFormatter = DateFormatter()
+         // Set Date Format
+         dateFormatter.dateFormat = "yyyy"
+         dateFormatter.string(from: date)
+         let SubsYear: String = dateFormatter.string(from: date)
+         return SubsYear
+         */
+        
+        let date = Calendar.current.date(byAdding: .year, value: -1, to: Date())
+        let dateFormatter = DateFormatter()
+        // Set Date Format
+        dateFormatter.dateFormat = "EEEE dd MMMM yyyy"
+        dateFormatter.string(from: date!)
+        let SubsYear: String = dateFormatter.string(from: date!)
+        return SubsYear
+       
+        
+    }
+    
+    func SubstractSelectiveOneYear(Year:Date)-> String?{
+        
+        let date = Calendar.current.date(byAdding: .year, value: -1, to: Year)
+        let dateFormatter = DateFormatter()
+        // Set Date Format
+        dateFormatter.dateFormat = "dd MMMM yyyy"
+        dateFormatter.string(from: date!)
+        let SubsYear: String = dateFormatter.string(from: date!)
+        return SubsYear
+       
+    }
+    
+    
+
+    
+/**
+ func addOrSubtractYear(year:Int)->Date{
+   return Calendar.current.date(byAdding: .year, value: year, to: Date())!
+ }
+ */
+    
+    func convertDateToLocalTime(_ date: Date) -> Date {
+            let timeZoneOffset = Double(TimeZone.current.secondsFromGMT(for: date))
+            return Calendar.current.date(byAdding: .second, value: Int(timeZoneOffset), to: date)!
+    }
+    
 }
 
 
+extension Date {
+    var startOfWeek: Date? {
+        let gregorian = Calendar(identifier: .gregorian)
+        guard let startDay = gregorian.date(from: gregorian.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)) else { return nil }
+        return gregorian.date(byAdding: .day, value: 1, to: startDay)
+    }
+
+    var endOfWeek: Date? {
+        let gregorian = Calendar(identifier: .gregorian)
+        guard let startDay = gregorian.date(from: gregorian.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)) else { return nil }
+        return gregorian.date(byAdding: .day, value: 7, to: startDay)
+       }
+    
+    func getMonthStart(of component: Calendar.Component, calendar: Calendar = Calendar.current) -> Date? {
+          return calendar.dateInterval(of: component, for: self)?.start
+      }
+
+      func getMonthEnd(of component: Calendar.Component, calendar: Calendar = Calendar.current) -> Date? {
+          return calendar.dateInterval(of: component, for: self)?.end
+      }
+    
+    
+}

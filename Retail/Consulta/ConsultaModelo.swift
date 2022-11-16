@@ -15,6 +15,10 @@ protocol ConsultaModeloProtocol: AnyObject {
     
 }
 
+var fechaPresente: String = ""
+var fechaPasada: String = ""
+
+
 let elToken : String = UserDefaults.standard.string(forKey: "token")!
 let helper = Helper()
 
@@ -101,7 +105,7 @@ class ConsultaModelo: NSObject {
                 detalle.Sucursal = Sucursal as? String
                 detalle.Suc = Suc as? String
                 detalle.VentaTotal = VentaTotal as? String
-                detalle.NoFolios = NoFolios as? Int64
+                detalle.NoFolios = NoFolios as? Int
                 detalle.Piezas = Piezas as? String
                 detalle.PzaxTicket = PzaxTicket as? String
                 detalle.TicketPromedio = TicketPromedio as? String

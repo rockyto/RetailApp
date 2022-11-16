@@ -17,10 +17,13 @@
 		93030F5E291ACB0300B02C5A /* RetailUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93030F5D291ACB0300B02C5A /* RetailUITests.swift */; };
 		93030F60291ACB0300B02C5A /* RetailUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93030F5F291ACB0300B02C5A /* RetailUITestsLaunchTests.swift */; };
 		93030F6D291AEAD900B02C5A /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93030F6C291AEAD900B02C5A /* Helper.swift */; };
+		9330B9C92922BE1700F37D35 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9330B9C82922BE1700F37D35 /* HomeViewController.swift */; };
+		9330B9CB2922C8D500F37D35 /* IMG_52D4224DE1EE-1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 9330B9CA2922C8D400F37D35 /* IMG_52D4224DE1EE-1.jpeg */; };
 		935728AF291C72AC009896BA /* ConsultaModelo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935728AE291C72AC009896BA /* ConsultaModelo.swift */; };
 		935728B1291C7314009896BA /* DetallesConsulta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935728B0291C7314009896BA /* DetallesConsulta.swift */; };
 		935728B3291C87D1009896BA /* ConsultaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935728B2291C87D1009896BA /* ConsultaTableViewCell.swift */; };
 		93723E50291C3728000FD5AC /* InicioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93723E4F291C3728000FD5AC /* InicioViewController.swift */; };
+		93B17672291CD2650018589A /* DetalleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B17671291CD2650018589A /* DetalleViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,10 +58,13 @@
 		93030F5D291ACB0300B02C5A /* RetailUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailUITests.swift; sourceTree = "<group>"; };
 		93030F5F291ACB0300B02C5A /* RetailUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		93030F6C291AEAD900B02C5A /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		9330B9C82922BE1700F37D35 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		9330B9CA2922C8D400F37D35 /* IMG_52D4224DE1EE-1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "IMG_52D4224DE1EE-1.jpeg"; sourceTree = "<group>"; };
 		935728AE291C72AC009896BA /* ConsultaModelo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultaModelo.swift; sourceTree = "<group>"; };
 		935728B0291C7314009896BA /* DetallesConsulta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetallesConsulta.swift; sourceTree = "<group>"; };
 		935728B2291C87D1009896BA /* ConsultaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultaTableViewCell.swift; sourceTree = "<group>"; };
 		93723E4F291C3728000FD5AC /* InicioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InicioViewController.swift; sourceTree = "<group>"; };
+		93B17671291CD2650018589A /* DetalleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalleViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,8 +117,10 @@
 			children = (
 				935728AD291C7282009896BA /* Consulta */,
 				93030F3C291ACAFE00B02C5A /* AppDelegate.swift */,
+				9330B9C82922BE1700F37D35 /* HomeViewController.swift */,
 				93030F3E291ACAFE00B02C5A /* SceneDelegate.swift */,
 				93030F6C291AEAD900B02C5A /* Helper.swift */,
+				9330B9CA2922C8D400F37D35 /* IMG_52D4224DE1EE-1.jpeg */,
 				93030F40291ACAFE00B02C5A /* ViewController.swift */,
 				93723E4F291C3728000FD5AC /* InicioViewController.swift */,
 				93030F42291ACAFE00B02C5A /* Main.storyboard */,
@@ -146,6 +154,7 @@
 				935728AE291C72AC009896BA /* ConsultaModelo.swift */,
 				935728B0291C7314009896BA /* DetallesConsulta.swift */,
 				935728B2291C87D1009896BA /* ConsultaTableViewCell.swift */,
+				93B17671291CD2650018589A /* DetalleViewController.swift */,
 			);
 			path = Consulta;
 			sourceTree = "<group>";
@@ -254,6 +263,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9330B9CB2922C8D500F37D35 /* IMG_52D4224DE1EE-1.jpeg in Resources */,
 				93030F49291ACB0200B02C5A /* LaunchScreen.storyboard in Resources */,
 				93030F46291ACB0200B02C5A /* Assets.xcassets in Resources */,
 				93030F44291ACAFE00B02C5A /* Main.storyboard in Resources */,
@@ -284,7 +294,9 @@
 				935728AF291C72AC009896BA /* ConsultaModelo.swift in Sources */,
 				93030F41291ACAFE00B02C5A /* ViewController.swift in Sources */,
 				935728B3291C87D1009896BA /* ConsultaTableViewCell.swift in Sources */,
+				93B17672291CD2650018589A /* DetalleViewController.swift in Sources */,
 				93030F3D291ACAFE00B02C5A /* AppDelegate.swift in Sources */,
+				9330B9C92922BE1700F37D35 /* HomeViewController.swift in Sources */,
 				93030F3F291ACAFE00B02C5A /* SceneDelegate.swift in Sources */,
 				93723E50291C3728000FD5AC /* InicioViewController.swift in Sources */,
 				93030F6D291AEAD900B02C5A /* Helper.swift in Sources */,

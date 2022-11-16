@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if(tokenUser != nil){
             
             print("El token del usuario es: ", tokenUser!)
-            let navCntrllr = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "vistaInicio")
+            let navCntrllr = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "vistaHome")
             window?.rootViewController = navCntrllr
             
         }
