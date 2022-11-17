@@ -9,7 +9,7 @@ import UIKit
 
 struct Present: Codable{
     
-    let Fecha: Int
+    let Fecha: String
     let Venta_Total: String
     let tickets: Int
     let piezas: String
@@ -21,7 +21,7 @@ struct Present: Codable{
 
 struct Past: Codable{
     
-    let Fecha: Int
+    let Fecha: String
     let Venta_Total: String
     let tickets: Int
     let piezas: String
@@ -36,17 +36,16 @@ struct Consulta: Codable{
 }
 
 class HomeViewController: UIViewController {
-    
+    //2022/11/14
     let helper = Helper()
     
     var FechaStart: String = ""
     var FechaEnd: String = ""
     
-    
     var pickerFechaStart: UIDatePicker!
     var pickerFechaEnd: UIDatePicker!
     
-   // @IBOutlet weak var lblFechaSelect: UILabel!
+    //@IBOutlet weak var lblFechaSelect: UILabel!
     //@IBOutlet weak var txtFechaPasada: UILabel!
     
     @IBOutlet weak var txtFechaPresente: UITextField!
@@ -54,7 +53,22 @@ class HomeViewController: UIViewController {
     
     @IBOutlet weak var SgtRangoFecha: UISegmentedControl!
     
-    @IBOutlet weak var lblVentaTotal: UILabel!
+    @IBOutlet weak var lblPresentVentaTotal: UILabel!
+    @IBOutlet weak var lblPresentPiezas: UILabel!
+    @IBOutlet weak var lblPresentTickets: UILabel!
+    @IBOutlet weak var lblPresentPzasTicket: UILabel!
+    @IBOutlet weak var lblPresentTicketProm: UILabel!
+    @IBOutlet weak var lblPresentUtilidad: UILabel!
+    
+    @IBOutlet weak var lblPastVentaTotal: UILabel!
+    @IBOutlet weak var lblPastPiezas: UILabel!
+    @IBOutlet weak var lblPastTickets: UILabel!
+    @IBOutlet weak var lblPastPzasTicket: UILabel!
+    @IBOutlet weak var lblPastTicketProm: UILabel!
+    @IBOutlet weak var lblPastUtilidad: UILabel!
+    
+    
+    
     
     @IBOutlet weak var viewVentaTotal: UIView!
     
@@ -66,22 +80,20 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
         SgtRangoFecha.backgroundColor = .systemGroupedBackground
         SgtRangoFecha.setTitleTextAttributes( [NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
-        
-    
         
         self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
         self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
         
         pickerFechaStart = UIDatePicker()
         pickerFechaStart.datePickerMode = .date
-        
         pickerFechaStart.maximumDate = Calendar.current.date(bySetting: .day, value: 0, of: Date())
         pickerFechaStart.maximumDate = Calendar.current.date(byAdding: .day, value: 0, to: Date())
-        
         pickerFechaStart.addTarget(self, action: #selector(self.datePickerDidChange(_:)), for: .valueChanged)
-    
         
         pickerFechaEnd = UIDatePicker()
         pickerFechaEnd.datePickerMode = .date
@@ -102,6 +114,8 @@ class HomeViewController: UIViewController {
         txtFechaPasada.inputView = pickerFechaEnd
         txtFechaPresente.inputView = pickerFechaStart
         
+        
+        ConsultaServer(fechaStart: txtFechaPresente.text! , fechaEnd: txtFechaPasada.text!)
         // Do any additional setup after loading the view.
     }
     
@@ -117,12 +131,12 @@ class HomeViewController: UIViewController {
         formatter.dateStyle = DateFormatter.Style.full
         
         if txtFechaPresente.isEditing == true{
-            txtFechaPresente.text = formatter.string(from: pickerFechaStart.date)
             
+            txtFechaPresente.text = formatter.string(from: pickerFechaStart.date)
             let FechaPresentSelected = DateFormatter()
             FechaPresentSelected.dateFormat = "EEEE dd MMMM yyyy"
             FechaStart = FechaPresentSelected.string(from: pickerFechaStart.date)
-            
+            print(FechaStart)
         }else if txtFechaPasada.isEditing == true{
             
             txtFechaPasada.text = "vs. "+formatter.string(from: pickerFechaEnd.date)
@@ -130,12 +144,10 @@ class HomeViewController: UIViewController {
             let FechaPasadaSelected = DateFormatter()
             FechaPasadaSelected.dateFormat = "EEEE dd MMMM yyyy"
             FechaEnd = FechaPasadaSelected.string(from: pickerFechaEnd.date)
-            
+            print(FechaEnd)
         }
         
-        
-   
-        print(FechaStart)
+    
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
@@ -189,6 +201,8 @@ class HomeViewController: UIViewController {
     
     @IBAction func ctrlButton(_ sender: Any){
         
+        
+        
         if SgtRangoFecha.selectedSegmentIndex == 0{
             
             txtFechaPresente.isEnabled = true
@@ -196,6 +210,8 @@ class HomeViewController: UIViewController {
             
             self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
             self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
+            //ConvierteDateAString(Fecha: Date)
+            
             
         }else if SgtRangoFecha.selectedSegmentIndex == 1 {
             
@@ -252,13 +268,66 @@ class HomeViewController: UIViewController {
         
     }
     
-    func ConsultaServer(DateStart: String, DateEnd: String){
+  
+    func ConsultaServer(fechaStart: String, fechaEnd: String){
         
-
+        let url = URL(string:helper.host+"consultar")!
+        let body = "{\n\n    \"dateStart\" :  \"2022/11/16\",\n    \"dateEnd\" :  \"2021/11/16\"\n\n}"
+        print(body)
+        var request = URLRequest(url: url)
+        
+        request.httpBody = body.data(using: .utf8)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("Bearer \(elToken)", forHTTPHeaderField: "Authorization")
+        
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
             
+            DispatchQueue.main.async { [self] in
+                
+                if error != nil{
+                    helper.showAlert(title: "Error de servidor", message: error!.localizedDescription, in: self)
+                    return
+                }
+                do{
+                    guard let data = data else{
+                        helper.showAlert(title: "Error de datos", message: error!.localizedDescription, in: self)
+                        return
+                    }
+                    
+                    let jsonQuery = try? JSONDecoder().decode(Consulta.self, from: data)
+                    print(jsonQuery)
+                    guard let parsedJSON = jsonQuery else{
+                        print("Error de parseo")
+                        return
+                    }
+                    
+                    lblPresentVentaTotal.text = helper.currencyFormatting(total: parsedJSON.present.Venta_Total)as String?
+                    lblPresentPiezas.text = helper.prettyK(Double(parsedJSON.present.piezas)!)
+                    lblPresentTickets.text = String(parsedJSON.present.tickets)
+                    lblPresentPzasTicket.text = parsedJSON.present.PzaxTicket as String?
+                    lblPresentTicketProm.text =  "$" + parsedJSON.present.TicketPromedio as String?
+                    lblPresentUtilidad.text = (parsedJSON.present.utilidad as String?)! + "%"
+                    
+                    lblPastVentaTotal.text = helper.currencyFormatting(total: parsedJSON.past.Venta_Total)as String?
+                    lblPastPiezas.text = helper.prettyK(Double(parsedJSON.past.piezas)!)
+                    lblPastTickets.text = String(parsedJSON.past.tickets)
+                    lblPastPzasTicket.text = parsedJSON.past.PzaxTicket as String?
+                    lblPastTicketProm.text =  "$" + parsedJSON.past.TicketPromedio as String?
+                    lblPastUtilidad.text = (parsedJSON.past.utilidad as String?)! + "%"
+                
+                }catch{
+                    
+                    helper.showAlert(title: "Error", message: error.localizedDescription, in: self)
+                    
+                }
+            }
+        }.resume()
         
     }
-    
+
     /*
     // MARK: - Navigation
 

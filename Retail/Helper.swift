@@ -24,25 +24,47 @@ class Helper{
         }
         
         let user = UserLogin(email: usr, password: psswd)
-        
         let jsonEncoder = JSONEncoder()
-        
         jsonEncoder.outputFormatting = .prettyPrinted
         
         do{
-            
             let encodeLogin = try jsonEncoder.encode(user)
             let encodeStringUser = String(data: encodeLogin, encoding: .utf8)!
             body = encodeStringUser
-            
         }catch{
-            
             print(error.localizedDescription)
-            
         }
         
         return body
         
+    }
+    
+    func bodyDates(dateStart: String, dateEnd:String) -> String{
+        
+        let dateStartString: String = convierteStringEnFechaString(laFecha: dateStart)
+        let dateEndString: String = convierteStringEnFechaString(laFecha: dateEnd)
+        
+        var body: String = ""
+        
+        struct paramsDates: Codable{
+            
+            var dateStart: String
+            var dateEnd: String
+            
+        }
+        
+        let query = paramsDates(dateStart: dateStartString, dateEnd: dateEndString)
+        
+        let jsonEncoder = JSONEncoder()
+        jsonEncoder.outputFormatting = .prettyPrinted
+        do{
+            let encodeQuery = try jsonEncoder.encode(query)
+            let encodeStringQuery = String(data: encodeQuery, encoding: .utf8)!
+            body = encodeStringQuery
+        }catch{
+            print(error.localizedDescription)
+        }
+        return body
     }
     
     func showAlert(title: String, message: String, in vc: UIViewController) {
@@ -60,16 +82,17 @@ class Helper{
         
         nuevoViewController.modalPresentationStyle = .custom
         vc.present(nuevoViewController, animated: animated, completion: completion)
+        
     }
     
     func convierteStringEnFechaString(laFecha: String) -> String{
         let fecha = laFecha
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = "EEEE dd MMMM yyyy"
         let fechaString = dateFormatter.date(from: fecha)
         
         let formatterShow = DateFormatter()
-        formatterShow.dateFormat = "EEEE dd MMMM yyyy"
+        formatterShow.dateFormat = "yyyy/MM/dd"
         let fechaFinal = formatterShow.string(from: fechaString!)
         let fechaCita = fechaFinal
         return fechaCita
@@ -141,7 +164,49 @@ class Helper{
        
     }
     
+    func prettyK(_ pzas: Double) -> String{
+        
+        let n:Int = Int(pzas)
+        
+        let num = abs(Double(n))
+        let sign = (n < 0) ? "-" : ""
+
+        switch num {
+        case 1_000_000_000...:
+            var formatted = num / 1_000_000_000
+            formatted = formatted.reduceScale(to: 1)
+            return "\(sign)\(formatted)B"
+
+        case 1_000_000...:
+            var formatted = num / 1_000_000
+            formatted = formatted.reduceScale(to: 1)
+            return "\(sign)\(formatted)M"
+
+        case 1_000...:
+            var formatted = num / 1_000
+            formatted = formatted.reduceScale(to: 1)
+            return "\(sign)\(formatted)K"
+
+        case 0...:
+            return "\(n)"
+
+        default:
+            return "\(sign)\(n)"
+        }
+    }
     
+    func currencyFormatting(total: String) -> String {
+          if let value = Double(total) {
+              let formatter = NumberFormatter()
+              formatter.numberStyle = .currency
+              formatter.maximumFractionDigits = 2
+              formatter.minimumFractionDigits = 2
+              if let str = formatter.string(for: value) {
+                  return str
+              }
+          }
+          return ""
+      }
 
     
 /**
@@ -179,5 +244,14 @@ extension Date {
           return calendar.dateInterval(of: component, for: self)?.end
       }
     
-    
+}
+
+extension Double {
+    func reduceScale(to places: Int) -> Double {
+        let multiplier = pow(10, Double(places))
+        let newDecimal = multiplier * self // move the decimal right
+        let truncated = Double(Int(newDecimal)) // drop the fraction
+        let originalDecimal = truncated / multiplier // move the decimal back
+        return originalDecimal
+    }
 }
