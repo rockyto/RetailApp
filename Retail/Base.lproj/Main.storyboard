@@ -55,6 +55,7 @@
                                                     <constraint firstAttribute="height" constant="50" id="87H-Jr-XLj"/>
                                                     <constraint firstAttribute="width" constant="352" id="owI-5V-u2q"/>
                                                 </constraints>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                             </textField>
@@ -561,7 +562,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PdR-b2-qOv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3943.2558139534885" y="3.218884120171674"/>
+            <point key="canvasLocation" x="3931" y="11"/>
         </scene>
         <!--Detalle View Controller-->
         <scene sceneID="mll-9i-1Du">
@@ -879,7 +880,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XuT-18-9ZN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3820.4651162790697" y="-780.25751072961384"/>
+            <point key="canvasLocation" x="3755" y="-780"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nrT-v6-nfi">
@@ -897,7 +898,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Loo-VV-xXz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5162.7906976744189" y="-115.23605150214593"/>
+            <point key="canvasLocation" x="4637" y="11"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Rg3-N9-c6A">

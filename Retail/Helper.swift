@@ -41,8 +41,8 @@ class Helper{
     
     func bodyDates(dateStart: String, dateEnd:String) -> String{
         
-        let dateStartString: String = convierteStringEnFechaString(laFecha: dateStart)
-        let dateEndString: String = convierteStringEnFechaString(laFecha: dateEnd)
+        let dateStartString: String = dateStart
+        let dateEndString: String = dateEnd
         
         var body: String = ""
         

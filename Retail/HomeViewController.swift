@@ -36,7 +36,6 @@ struct Consulta: Codable{
 }
 
 class HomeViewController: UIViewController {
-    //2022/11/14
     let helper = Helper()
     
     var FechaStart: String = ""
@@ -44,9 +43,6 @@ class HomeViewController: UIViewController {
     
     var pickerFechaStart: UIDatePicker!
     var pickerFechaEnd: UIDatePicker!
-    
-    //@IBOutlet weak var lblFechaSelect: UILabel!
-    //@IBOutlet weak var txtFechaPasada: UILabel!
     
     @IBOutlet weak var txtFechaPresente: UITextField!
     @IBOutlet weak var txtFechaPasada: UITextField!
@@ -67,9 +63,6 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var lblPastTicketProm: UILabel!
     @IBOutlet weak var lblPastUtilidad: UILabel!
     
-    
-    
-    
     @IBOutlet weak var viewVentaTotal: UIView!
     
     @IBOutlet weak var viewNoTickets: UIView!
@@ -81,7 +74,8 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        txtFechaPresente.isEnabled = false
+        txtFechaPasada.isEnabled = false
         
         SgtRangoFecha.backgroundColor = .systemGroupedBackground
         SgtRangoFecha.setTitleTextAttributes( [NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
@@ -89,12 +83,14 @@ class HomeViewController: UIViewController {
         self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
         self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
         
+        //MARK: Picker: FechaStart
         pickerFechaStart = UIDatePicker()
         pickerFechaStart.datePickerMode = .date
         pickerFechaStart.maximumDate = Calendar.current.date(bySetting: .day, value: 0, of: Date())
         pickerFechaStart.maximumDate = Calendar.current.date(byAdding: .day, value: 0, to: Date())
         pickerFechaStart.addTarget(self, action: #selector(self.datePickerDidChange(_:)), for: .valueChanged)
         
+        //MARK: Picker: FechaEnd
         pickerFechaEnd = UIDatePicker()
         pickerFechaEnd.datePickerMode = .date
         pickerFechaEnd.maximumDate = Calendar.current.date(bySetting: .day, value: 0, of: Date())
@@ -115,8 +111,8 @@ class HomeViewController: UIViewController {
         txtFechaPresente.inputView = pickerFechaStart
         
         
-        ConsultaServer(fechaStart: txtFechaPresente.text! , fechaEnd: txtFechaPasada.text!)
-        // Do any additional setup after loading the view.
+        ConsultaServer(fechaStart: "2022/11/16" , fechaEnd: "2021/11/16")
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -124,8 +120,8 @@ class HomeViewController: UIViewController {
         
         conf_subviews()
 
-
     }
+    
     @objc func datePickerDidChange(_ pickerFechaStart: UIDatePicker){
         let formatter = DateFormatter()
         formatter.dateStyle = DateFormatter.Style.full
@@ -137,6 +133,7 @@ class HomeViewController: UIViewController {
             FechaPresentSelected.dateFormat = "EEEE dd MMMM yyyy"
             FechaStart = FechaPresentSelected.string(from: pickerFechaStart.date)
             print(FechaStart)
+            
         }else if txtFechaPasada.isEditing == true{
             
             txtFechaPasada.text = "vs. "+formatter.string(from: pickerFechaEnd.date)
@@ -152,6 +149,11 @@ class HomeViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
         
+        if FechaStart != FechaEnd{
+            ConsultaServer(fechaStart: "2022/11/16" , fechaEnd: "2021/11/16")
+        }else{
+            
+        }
         self.view.endEditing(false)
         txtFechaPresente.resignFirstResponder()
         
@@ -201,17 +203,13 @@ class HomeViewController: UIViewController {
     
     @IBAction func ctrlButton(_ sender: Any){
         
-        
-        
         if SgtRangoFecha.selectedSegmentIndex == 0{
             
-            txtFechaPresente.isEnabled = true
-            txtFechaPasada.isEnabled = true
-            
+            txtFechaPresente.isEnabled = false
+            txtFechaPasada.isEnabled = false
+            ConsultaServer(fechaStart: "2022/11/16" , fechaEnd: "2021/11/16")
             self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
             self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
-            //ConvierteDateAString(Fecha: Date)
-            
             
         }else if SgtRangoFecha.selectedSegmentIndex == 1 {
             
@@ -224,8 +222,6 @@ class HomeViewController: UIViewController {
             let pastYear: Date = Calendar.current.date(byAdding: .year, value: -1, to: Date())!
             let pastYearDateStart: Date = pastYear.startOfWeek!
             let pastYearDateEnd: Date = pastYear.endOfWeek!
-            
-           // let pastYearDateStart: String = helper.SubstractSelectiveOneYear(Year: Date().startOfWeek!)!
             
             txtFechaPresente.text = helper.ConvierteDateAString(Fecha: dateStart)! + " - " + helper.ConvierteDateAString(Fecha: dateEnd)!
             txtFechaPasada.text = "vs. " + helper.ConvierteDateAString(Fecha: pastYearDateStart)! + " - " + helper.ConvierteDateAString(Fecha: pastYearDateEnd)!
@@ -260,6 +256,13 @@ class HomeViewController: UIViewController {
             
         }else if SgtRangoFecha.selectedSegmentIndex == 3 {
             
+            txtFechaPresente.isEnabled = true
+            txtFechaPasada.isEnabled = true
+            
+            txtFechaPresente.becomeFirstResponder()
+            self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
+            self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
+            
             if txtFechaPresente.isEnabled && txtFechaPasada.isEnabled == false{
                 txtFechaPresente.isEnabled = true
                 txtFechaPasada.isEnabled = true
@@ -271,8 +274,25 @@ class HomeViewController: UIViewController {
   
     func ConsultaServer(fechaStart: String, fechaEnd: String){
         
+        lblPresentVentaTotal.text = "- -"
+        lblPresentPiezas.text = "- -"
+        lblPresentTickets.text = "- -"
+        lblPresentPzasTicket.text = "- -"
+        lblPresentTicketProm.text = "- -"
+        lblPresentUtilidad.text = "- -"
+        
+        lblPastVentaTotal.text = "- -"
+        lblPastPiezas.text = "- -"
+        lblPastTickets.text = "- -"
+        lblPastPzasTicket.text = "- -"
+        lblPastTicketProm.text = "- -"
+        lblPastUtilidad.text = "- -"
+        
+        let spinningActivity = MBProgressHUD.showAdded(to: self.view, animated: true)
+        
         let url = URL(string:helper.host+"consultar")!
-        let body = "{\n\n    \"dateStart\" :  \"2022/11/16\",\n    \"dateEnd\" :  \"2021/11/16\"\n\n}"
+        let body = helper.bodyDates(dateStart: fechaStart, dateEnd:fechaEnd)
+        
         print(body)
         var request = URLRequest(url: url)
         
@@ -282,24 +302,29 @@ class HomeViewController: UIViewController {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("Bearer \(elToken)", forHTTPHeaderField: "Authorization")
         
+        spinningActivity?.labelText = "Descargando"
+        spinningActivity?.detailsLabelText = "un momento por favor"
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             
             DispatchQueue.main.async { [self] in
                 
                 if error != nil{
+                    spinningActivity?.hide(true)
                     helper.showAlert(title: "Error de servidor", message: error!.localizedDescription, in: self)
                     return
                 }
                 do{
                     guard let data = data else{
+                        spinningActivity?.hide(true)
                         helper.showAlert(title: "Error de datos", message: error!.localizedDescription, in: self)
                         return
                     }
                     
                     let jsonQuery = try? JSONDecoder().decode(Consulta.self, from: data)
-                    print(jsonQuery)
+                    
                     guard let parsedJSON = jsonQuery else{
+                        spinningActivity?.hide(true)
                         print("Error de parseo")
                         return
                     }
@@ -317,15 +342,17 @@ class HomeViewController: UIViewController {
                     lblPastPzasTicket.text = parsedJSON.past.PzaxTicket as String?
                     lblPastTicketProm.text =  "$" + parsedJSON.past.TicketPromedio as String?
                     lblPastUtilidad.text = (parsedJSON.past.utilidad as String?)! + "%"
-                
+                    spinningActivity?.hide(true)
+                    
                 }catch{
                     
+                    spinningActivity?.hide(true)
                     helper.showAlert(title: "Error", message: error.localizedDescription, in: self)
                     
                 }
             }
         }.resume()
-        
+       
     }
 
     /*
