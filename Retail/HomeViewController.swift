@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: Estructura para el parseo de datos en fecha presente o inicio
 struct Present: Codable{
     
     let Fecha: String
@@ -19,6 +20,7 @@ struct Present: Codable{
     
 }
 
+//MARK: Estructura para el parseo de datos en fecha pasadae o final
 struct Past: Codable{
     
     let Fecha: String
@@ -30,6 +32,8 @@ struct Past: Codable{
     let utilidad: String
     
 }
+
+//MARK: Estructura para la serialización del JSON nested
 struct Consulta: Codable{
     let present: Present
     let past: Past
@@ -38,24 +42,28 @@ struct Consulta: Codable{
 class HomeViewController: UIViewController {
     let helper = Helper()
     
+    //MARK: Variables para la referencia de las fechas
     var FechaStart: String = ""
     var FechaEnd: String = ""
     
+    //MARK: Variable para la declaración del picker
     var pickerFechaStart: UIDatePicker!
     var pickerFechaEnd: UIDatePicker!
     
+    //MARK: Declaración de los textfields que reciben la fecha
     @IBOutlet weak var txtFechaPresente: UITextField!
     @IBOutlet weak var txtFechaPasada: UITextField!
     
+    //MARK: Declaración del segmented control
     @IBOutlet weak var SgtRangoFecha: UISegmentedControl!
     
+    //MARK: Declaración de las etiquetas
     @IBOutlet weak var lblPresentVentaTotal: UILabel!
     @IBOutlet weak var lblPresentPiezas: UILabel!
     @IBOutlet weak var lblPresentTickets: UILabel!
     @IBOutlet weak var lblPresentPzasTicket: UILabel!
     @IBOutlet weak var lblPresentTicketProm: UILabel!
     @IBOutlet weak var lblPresentUtilidad: UILabel!
-    
     @IBOutlet weak var lblPastVentaTotal: UILabel!
     @IBOutlet weak var lblPastPiezas: UILabel!
     @IBOutlet weak var lblPastTickets: UILabel!
@@ -63,14 +71,15 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var lblPastTicketProm: UILabel!
     @IBOutlet weak var lblPastUtilidad: UILabel!
     
+    //MARK: Declaración de subviews
     @IBOutlet weak var viewVentaTotal: UIView!
-    
     @IBOutlet weak var viewNoTickets: UIView!
     @IBOutlet weak var viewTicketProm: UIView!
     @IBOutlet weak var viewPiezas: UIView!
     @IBOutlet weak var viewPiezasPorTicket: UIView!
     @IBOutlet weak var viewUtiliadad: UIView!
     
+    //MARK: Inicializador parte del ciclo de vida de la app
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -109,12 +118,12 @@ class HomeViewController: UIViewController {
         
         txtFechaPasada.inputView = pickerFechaEnd
         txtFechaPresente.inputView = pickerFechaStart
-        
-        
+    
         ConsultaServer(fechaStart: "2022/11/16" , fechaEnd: "2021/11/16")
-        
+    
     }
     
+    //MARK: Llamada para notificar al controlador que la vista acaba de presentar sus subvistas configuradas
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -122,6 +131,7 @@ class HomeViewController: UIViewController {
 
     }
     
+    //MARK: Función disponible en ObjectiveC que detecta cambio de valores en un picker
     @objc func datePickerDidChange(_ pickerFechaStart: UIDatePicker){
         let formatter = DateFormatter()
         formatter.dateStyle = DateFormatter.Style.full
@@ -147,6 +157,7 @@ class HomeViewController: UIViewController {
     
     }
     
+    //MARK: Indica a este objeto que se produjeron uno o más toques nuevos en una vista o ventana
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
         
         if FechaStart != FechaEnd{
@@ -159,6 +170,7 @@ class HomeViewController: UIViewController {
         
     }
     
+    //MARK: Función para la configuración de las subvistas
     func conf_subviews(){
         
         viewVentaTotal.layer.cornerRadius = 10
@@ -201,18 +213,19 @@ class HomeViewController: UIViewController {
         
     }
     
+    //MARK: Control para ejecutar el calculo de fechas según su segmentación
     @IBAction func ctrlButton(_ sender: Any){
         
-        if SgtRangoFecha.selectedSegmentIndex == 0{
+        switch SgtRangoFecha.selectedSegmentIndex {
             
+        case 0:
             txtFechaPresente.isEnabled = false
             txtFechaPasada.isEnabled = false
             ConsultaServer(fechaStart: "2022/11/16" , fechaEnd: "2021/11/16")
             self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
             self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
-            
-        }else if SgtRangoFecha.selectedSegmentIndex == 1 {
-            
+            break
+        case 1:
             txtFechaPresente.isEnabled = false
             txtFechaPasada.isEnabled = false
             
@@ -225,11 +238,8 @@ class HomeViewController: UIViewController {
             
             txtFechaPresente.text = helper.ConvierteDateAString(Fecha: dateStart)! + " - " + helper.ConvierteDateAString(Fecha: dateEnd)!
             txtFechaPasada.text = "vs. " + helper.ConvierteDateAString(Fecha: pastYearDateStart)! + " - " + helper.ConvierteDateAString(Fecha: pastYearDateEnd)!
-            
-            print("Semana seleccionado")
-            
-        }else if SgtRangoFecha.selectedSegmentIndex == 2 {
-            
+            break
+        case 2:
             txtFechaPresente.isEnabled = false
             txtFechaPasada.isEnabled = false
             
@@ -239,23 +249,22 @@ class HomeViewController: UIViewController {
 
             let comp: DateComponents = Calendar.current.dateComponents([.year, .month], from: date)
             let startOfMonth:Date = Calendar.current.date(from: comp)!
-          //  print(dateFormatter.string(from: startOfMonth))
+          
                                     
             var comps2 = DateComponents()
             comps2.month = 1
             comps2.day = -1
             let endOfMonth:Date = Calendar.current.date(byAdding: comps2, to: startOfMonth)!
-          // print(dateFormatter.string(from: endOfMonth))
+         
             
             let pastStartMonthYear: Date = Calendar.current.date(byAdding: .year, value: -1, to: startOfMonth)!
             let pastEndMonthYear: Date = Calendar.current.date(byAdding: .year, value: -1, to: endOfMonth)!
-           // var pastYearMonthStart: Date = pastMonthYear.startOfMonth!
             
             txtFechaPresente.text = helper.ConvierteDateAString(Fecha:startOfMonth)! + " - " + helper.ConvierteDateAString(Fecha:endOfMonth)!
             txtFechaPasada.text = "vs. " + helper.ConvierteDateAString(Fecha:pastStartMonthYear)! + " - " + helper.ConvierteDateAString(Fecha:pastEndMonthYear)!
+            break
             
-        }else if SgtRangoFecha.selectedSegmentIndex == 3 {
-            
+        case 3:
             txtFechaPresente.isEnabled = true
             txtFechaPasada.isEnabled = true
             
@@ -267,11 +276,22 @@ class HomeViewController: UIViewController {
                 txtFechaPresente.isEnabled = true
                 txtFechaPasada.isEnabled = true
             }
+            break
+            
+        default:
+            
+            txtFechaPresente.isEnabled = false
+            txtFechaPasada.isEnabled = false
+            ConsultaServer(fechaStart: "2022/11/16" , fechaEnd: "2021/11/16")
+            self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
+            self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
+            break
         }
+
         
     }
     
-  
+    //MARK: Hace la comunicación con el servidor para el envío de los parametros y descarga de los datos
     func ConsultaServer(fechaStart: String, fechaEnd: String){
         
         lblPresentVentaTotal.text = "- -"
@@ -311,13 +331,13 @@ class HomeViewController: UIViewController {
                 
                 if error != nil{
                     spinningActivity?.hide(true)
-                    helper.showAlert(title: "Error de servidor", message: error!.localizedDescription, in: self)
+                    helper.UIShowAlert(title: "Error de servidor", message: error!.localizedDescription, in: self)
                     return
                 }
                 do{
                     guard let data = data else{
                         spinningActivity?.hide(true)
-                        helper.showAlert(title: "Error de datos", message: error!.localizedDescription, in: self)
+                        helper.UIShowAlert(title: "Error de datos", message: error!.localizedDescription, in: self)
                         return
                     }
                     
@@ -347,7 +367,7 @@ class HomeViewController: UIViewController {
                 }catch{
                     
                     spinningActivity?.hide(true)
-                    helper.showAlert(title: "Error", message: error.localizedDescription, in: self)
+                    helper.UIShowAlert(title: "Error", message: error.localizedDescription, in: self)
                     
                 }
             }
