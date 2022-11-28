@@ -15,8 +15,7 @@ protocol ConsultaModeloProtocol: AnyObject {
     
 }
 
-var fechaPresente: String = ""
-var fechaPasada: String = ""
+var dateDay: String = ""
 
 
 let elToken : String = UserDefaults.standard.string(forKey: "token")!
@@ -26,16 +25,19 @@ class ConsultaModelo: NSObject {
     
     weak var ElDelegado : ConsultaModeloProtocol!
     
-    let URLPath = helper.host+"consultar"
+    let url = URL(string: helper.host+"tiendas")!
+    let body = helper.bodyDateDay(dateDay: dateDay)
     
     func downloadConsulta(){
         
-        var request = URLRequest(url: URL(string: URLPath)!)
+        print("El body de la fecha:", body)
+        
+        var request = URLRequest(url: url)
+        request.httpBody = body.data(using: .utf8)
+        request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("Bearer \(elToken)", forHTTPHeaderField: "Authorization")
-        
-        request.httpMethod = "POST"
         
         let SessionDefault = Foundation.URLSession(configuration: URLSessionConfiguration.ephemeral)
         URLCache.shared.removeAllCachedResponses()
@@ -97,14 +99,15 @@ class ConsultaModelo: NSObject {
                 let NoFolios = jsonElement["N_Folios"]
                 let Piezas = jsonElement["Piezas"]
                 let PzaxTicket = jsonElement["PzaxTicket"]
-                let TicketPromedio = jsonElement["TicketPromedio"]
+                let TicketPromedio = jsonElement["TicketProm"]
                 
                 let fechaJSON = helper.convierteStringEnFechaString(laFecha: Fecha as! String)
                 
                 detalle.Fecha = fechaJSON
                 detalle.Sucursal = Sucursal as? String
                 detalle.Suc = Suc as? String
-                detalle.VentaTotal = VentaTotal as? String
+                //helper.currencyFormatting(total: VentaTotal as? String)as String?
+                detalle.VentaTotal = helper.currencyFormatting(total: (VentaTotal as? String)!)as String?
                 detalle.NoFolios = NoFolios as? Int
                 detalle.Piezas = Piezas as? String
                 detalle.PzaxTicket = PzaxTicket as? String

@@ -14,6 +14,26 @@ class Helper{
     //MARK: Constante para la definición del host para despues hacer el cambio para el despligue a production.
     let host: String = "http://retail.test/api/"
     
+    func bodyDateDay(dateDay: String) -> String{
+        var body: String = ""
+        
+        struct theDateDay: Codable{
+            var dateDay: String
+        }
+        
+        let date = theDateDay(dateDay: dateDay)
+        let jsonEncoder = JSONEncoder()
+        jsonEncoder.outputFormatting = .prettyPrinted
+        do{
+            let encodeDate = try jsonEncoder.encode(date)
+            let encodeStringDate = String(data: encodeDate, encoding: .utf8)!
+            body = encodeStringDate
+        }catch{
+            print(error.localizedDescription)
+        }
+        return body
+    }
+    
     //MARK: Consutrcción del body que el backend requiere
     func BodyLogin(usr: String, psswd: String) -> String{
         
@@ -85,13 +105,35 @@ class Helper{
         
         let fecha = laFecha
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE dd MMMM yyyy"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         let fechaString = dateFormatter.date(from: fecha)
         let formatterShow = DateFormatter()
-        formatterShow.dateFormat = "yyyy/MM/dd"
+        formatterShow.dateFormat = "yyyy-MM-dd"
         let fechaFinal = formatterShow.string(from: fechaString!)
         let fechaCita = fechaFinal
         return fechaCita
+        
+    }
+    
+    func fechaFormatoQuery()-> String?{
+        
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.string(from: date)
+        let laFecha:String = dateFormatter.string(from: date)
+        return laFecha
+        
+    }
+    
+    func dateSubstractDayFormatQuery()-> String?{
+        
+        let date = Calendar.current.date(byAdding: .day, value: -1, to: Date())
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.string(from: date!)
+        let laFecha:String = dateFormatter.string(from: date!)
+        return laFecha
         
     }
     
@@ -134,6 +176,18 @@ class Helper{
         let date = Calendar.current.date(byAdding: .year, value: -1, to: Date())
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE dd MMMM yyyy"
+        dateFormatter.string(from: date!)
+        let SubsYear: String = dateFormatter.string(from: date!)
+        return SubsYear
+        
+    }
+    
+    //MARK: Resta un año a la fecha
+    func SubstractFormatOneYear()-> String?{
+        
+        let date = Calendar.current.date(byAdding: .year, value: -1, to: Date())
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         dateFormatter.string(from: date!)
         let SubsYear: String = dateFormatter.string(from: date!)
         return SubsYear

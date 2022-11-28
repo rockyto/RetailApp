@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     //MARK: Declaración de subvistas
     @IBOutlet weak var textFieldsView: UIView!
     @IBOutlet weak var SubViewLogin: UIView!
-
+    
     
     let helper = Helper()
     
@@ -46,7 +46,7 @@ class ViewController: UIViewController {
         SubViewLogin.layer.shadowOpacity = 0.2
         SubViewLogin.layer.shadowRadius = 10.0
         SubViewLogin.layer.shouldRasterize = true
-
+        
     }
     
     //MARK: Configuración de botones
@@ -93,6 +93,7 @@ class ViewController: UIViewController {
         let url = URL(string: helper.host+"login")!
         let body = helper.BodyLogin(usr: txtUserLogin.text!, psswd: txtPsswdLogin.text!)
         print(body)
+        
         var request = URLRequest(url: url)
         request.httpBody = body.data(using: .utf8)
         request.httpMethod = "POST"

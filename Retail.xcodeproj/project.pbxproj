@@ -23,6 +23,9 @@
 		935728B1291C7314009896BA /* DetallesConsulta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935728B0291C7314009896BA /* DetallesConsulta.swift */; };
 		935728B3291C87D1009896BA /* ConsultaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935728B2291C87D1009896BA /* ConsultaTableViewCell.swift */; };
 		93723E50291C3728000FD5AC /* InicioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93723E4F291C3728000FD5AC /* InicioViewController.swift */; };
+		9388E1E8292EF7DE0097EB7D /* TiendasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9388E1E7292EF7DE0097EB7D /* TiendasViewController.swift */; };
+		9388E1EA29302BB60097EB7D /* IMG_1155.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 9388E1E929302BB60097EB7D /* IMG_1155.PNG */; };
+		9388E22829312EEE0097EB7D /* IMG_1772.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 9388E22729312EED0097EB7D /* IMG_1772.PNG */; };
 		93B17672291CD2650018589A /* DetalleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B17671291CD2650018589A /* DetalleViewController.swift */; };
 		93CEF5502925C680006C6779 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CEF54F2925C67F006C6779 /* MBProgressHUD.m */; };
 /* End PBXBuildFile section */
@@ -65,6 +68,9 @@
 		935728B0291C7314009896BA /* DetallesConsulta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetallesConsulta.swift; sourceTree = "<group>"; };
 		935728B2291C87D1009896BA /* ConsultaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsultaTableViewCell.swift; sourceTree = "<group>"; };
 		93723E4F291C3728000FD5AC /* InicioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InicioViewController.swift; sourceTree = "<group>"; };
+		9388E1E7292EF7DE0097EB7D /* TiendasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiendasViewController.swift; sourceTree = "<group>"; };
+		9388E1E929302BB60097EB7D /* IMG_1155.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_1155.PNG; sourceTree = "<group>"; };
+		9388E22729312EED0097EB7D /* IMG_1772.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_1772.PNG; sourceTree = "<group>"; };
 		93B17671291CD2650018589A /* DetalleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetalleViewController.swift; sourceTree = "<group>"; };
 		93CEF54D2925C67C006C6779 /* Retail-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Retail-Bridging-Header.h"; sourceTree = "<group>"; };
 		93CEF54E2925C67E006C6779 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -126,8 +132,11 @@
 				93030F3E291ACAFE00B02C5A /* SceneDelegate.swift */,
 				93030F6C291AEAD900B02C5A /* Helper.swift */,
 				9330B9CA2922C8D400F37D35 /* IMG_52D4224DE1EE-1.jpeg */,
+				9388E22729312EED0097EB7D /* IMG_1772.PNG */,
+				9388E1E929302BB60097EB7D /* IMG_1155.PNG */,
 				93030F40291ACAFE00B02C5A /* ViewController.swift */,
 				93723E4F291C3728000FD5AC /* InicioViewController.swift */,
+				9388E1E7292EF7DE0097EB7D /* TiendasViewController.swift */,
 				93030F42291ACAFE00B02C5A /* Main.storyboard */,
 				93030F45291ACB0200B02C5A /* Assets.xcassets */,
 				93030F47291ACB0200B02C5A /* LaunchScreen.storyboard */,
@@ -282,6 +291,8 @@
 				9330B9CB2922C8D500F37D35 /* IMG_52D4224DE1EE-1.jpeg in Resources */,
 				93030F49291ACB0200B02C5A /* LaunchScreen.storyboard in Resources */,
 				93030F46291ACB0200B02C5A /* Assets.xcassets in Resources */,
+				9388E1EA29302BB60097EB7D /* IMG_1155.PNG in Resources */,
+				9388E22829312EEE0097EB7D /* IMG_1772.PNG in Resources */,
 				93030F44291ACAFE00B02C5A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -308,6 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				935728AF291C72AC009896BA /* ConsultaModelo.swift in Sources */,
+				9388E1E8292EF7DE0097EB7D /* TiendasViewController.swift in Sources */,
 				93030F41291ACAFE00B02C5A /* ViewController.swift in Sources */,
 				935728B3291C87D1009896BA /* ConsultaTableViewCell.swift in Sources */,
 				93B17672291CD2650018589A /* DetalleViewController.swift in Sources */,
