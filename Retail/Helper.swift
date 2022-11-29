@@ -160,6 +160,15 @@ class Helper{
         
     }
     
+    func detectFullDate()-> String?{
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE dd MMMM yyyy HH:mm"
+        dateFormatter.string(from: date)
+        let laFecha:String = dateFormatter.string(from: date)
+        return laFecha
+    }
+    
     //MARK: Conversor de fecha
     func ConvierteDateAString(Fecha: Date) -> String?{
         let date = Fecha
@@ -203,7 +212,7 @@ class Helper{
         dateFormatter.string(from: date!)
         let SubsYear: String = dateFormatter.string(from: date!)
         return SubsYear
-       
+        
     }
     
     //MARK: Formateador de cantidades
@@ -213,26 +222,26 @@ class Helper{
         
         let num = abs(Double(n))
         let sign = (n < 0) ? "-" : ""
-
+        
         switch num {
         case 1_000_000_000...:
             var formatted = num / 1_000_000_000
             formatted = formatted.reduceScale(to: 1)
             return "\(sign)\(formatted)B"
-
+            
         case 1_000_000...:
             var formatted = num / 1_000_000
             formatted = formatted.reduceScale(to: 1)
             return "\(sign)\(formatted)M"
-
+            
         case 1_000...:
             var formatted = num / 1_000
             formatted = formatted.reduceScale(to: 1)
             return "\(sign)\(formatted)K"
-
+            
         case 0...:
             return "\(n)"
-
+            
         default:
             return "\(sign)\(n)"
         }
@@ -240,21 +249,21 @@ class Helper{
     
     //MARK: Conversor a moneda
     func currencyFormatting(total: String) -> String {
-          if let value = Double(total) {
-              let formatter = NumberFormatter()
-              formatter.numberStyle = .currency
-              formatter.maximumFractionDigits = 2
-              formatter.minimumFractionDigits = 2
-              if let str = formatter.string(for: value) {
-                  return str
-              }
-          }
-          return ""
-      }
+        if let value = Double(total) {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .currency
+            formatter.maximumFractionDigits = 2
+            formatter.minimumFractionDigits = 2
+            if let str = formatter.string(for: value) {
+                return str
+            }
+        }
+        return ""
+    }
     
     func convertDateToLocalTime(_ date: Date) -> Date {
-            let timeZoneOffset = Double(TimeZone.current.secondsFromGMT(for: date))
-            return Calendar.current.date(byAdding: .second, value: Int(timeZoneOffset), to: date)!
+        let timeZoneOffset = Double(TimeZone.current.secondsFromGMT(for: date))
+        return Calendar.current.date(byAdding: .second, value: Int(timeZoneOffset), to: date)!
     }
     
 }
@@ -266,20 +275,20 @@ extension Date {
         guard let startDay = gregorian.date(from: gregorian.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)) else { return nil }
         return gregorian.date(byAdding: .day, value: 1, to: startDay)
     }
-
+    
     var endOfWeek: Date? {
         let gregorian = Calendar(identifier: .gregorian)
         guard let startDay = gregorian.date(from: gregorian.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)) else { return nil }
         return gregorian.date(byAdding: .day, value: 7, to: startDay)
-       }
+    }
     
     func getMonthStart(of component: Calendar.Component, calendar: Calendar = Calendar.current) -> Date? {
-          return calendar.dateInterval(of: component, for: self)?.start
-      }
-
-      func getMonthEnd(of component: Calendar.Component, calendar: Calendar = Calendar.current) -> Date? {
-          return calendar.dateInterval(of: component, for: self)?.end
-      }
+        return calendar.dateInterval(of: component, for: self)?.start
+    }
+    
+    func getMonthEnd(of component: Calendar.Component, calendar: Calendar = Calendar.current) -> Date? {
+        return calendar.dateInterval(of: component, for: self)?.end
+    }
     
 }
 

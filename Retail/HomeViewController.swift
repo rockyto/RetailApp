@@ -42,6 +42,8 @@ struct Consulta: Codable{
 class HomeViewController: UIViewController, UITextFieldDelegate {
     let helper = Helper()
     
+    @IBOutlet weak var lblLastDownload: UILabel!
+    
     //MARK: Variables para la referencia de las fechas
     var dateStartString: String = ""
     var dateEndString: String = ""
@@ -500,6 +502,13 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
                     lblPastPzasTicket.text = parsedJSON.past.PzaxTicket as String?
                     lblPastTicketProm.text =  "$" + parsedJSON.past.TicketPromedio as String?
                     lblPastUtilidad.text = (parsedJSON.past.utilidad as String?)! + "%"
+                    
+                    
+                    
+                    
+                    lblLastDownload.text = "Última actualización  "+helper.detectFullDate()!
+                    
+                    
                     spinningActivity?.hide(true)
                     
                 }catch{
