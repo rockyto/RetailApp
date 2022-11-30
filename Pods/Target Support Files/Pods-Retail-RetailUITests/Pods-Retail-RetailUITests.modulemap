@@ -1,0 +1,6 @@
+framework module Pods_Retail_RetailUITests {
+  umbrella header "Pods-Retail-RetailUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

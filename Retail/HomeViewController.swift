@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Charts
 
 //MARK: Estructura para el parseo de datos en fecha presente o inicio
 struct Present: Codable{
@@ -39,10 +40,13 @@ struct Consulta: Codable{
     let past: Past
 }
 
-class HomeViewController: UIViewController, UITextFieldDelegate {
+class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelegate {
     let helper = Helper()
     
     @IBOutlet weak var lblLastDownload: UILabel!
+    
+    @IBOutlet weak var barChartView:BarChartView!
+    
     
     //MARK: Variables para la referencia de las fechas
     var dateStartString: String = ""
@@ -72,6 +76,8 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var lblPastPzasTicket: UILabel!
     @IBOutlet weak var lblPastTicketProm: UILabel!
     @IBOutlet weak var lblPastUtilidad: UILabel!
+    
+    @IBOutlet weak var lblTitlePerTime: UILabel!
     
     //MARK: Declaración de subviews
     @IBOutlet weak var viewVentaTotal: UIView!
@@ -129,7 +135,6 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
             
         }
         
-        
         txtFechaPresente.inputView = pickerFechaStart
         txtFechaPasada.inputView = pickerFechaEnd
         ConsultaServer(fechaStart: helper.fechaFormatoQuery()! , fechaEnd: helper.SubstractFormatOneYear()!)
@@ -137,6 +142,92 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
         let doneEndButton = UIBarButtonItem(title: "ListoEnd", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.doneEndPicker))
         toolEndBar.setItems([doneEndButton], animated: false)
         txtFechaPasada.inputAccessoryView = toolEndBar
+        
+        
+    }
+    
+    private func chartValueSelected(_ chartView: ChartViewBase, entry: BarChartDataEntry, highlight: Highlight) {
+        
+        print("The entries: ", entry)
+        
+    }
+    
+    var yValues : [BarChartDataEntry] = [
+        BarChartDataEntry(x:Double(8), y: Double(200)),
+        BarChartDataEntry(x:Double(9), y: Double(50)),
+        BarChartDataEntry(x:Double(10), y: Double(30)),
+        BarChartDataEntry(x:Double(11), y: Double(60)),
+        BarChartDataEntry(x:Double(12), y: Double(80)),
+        BarChartDataEntry(x:Double(13), y: Double(140)),
+        BarChartDataEntry(x:Double(14), y: Double(100)),
+        BarChartDataEntry(x:Double(15), y: Double(80)),
+        BarChartDataEntry(x:Double(16), y: Double(20)),
+        BarChartDataEntry(x:Double(17), y: Double(70)),
+        BarChartDataEntry(x:Double(18), y: Double(90)),
+        BarChartDataEntry(x:Double(19), y: Double(110)),
+        BarChartDataEntry(x:Double(20), y: Double(180)),
+        BarChartDataEntry(x:Double(21), y: Double(20)),
+        BarChartDataEntry(x:Double(22), y: Double(140)),
+        BarChartDataEntry(x:Double(23), y: Double(190))
+        
+    ]
+    
+    var xValues : [BarChartDataEntry] = [
+        
+        BarChartDataEntry(x:Double(8), y: Double(100)),
+        BarChartDataEntry(x:Double(9), y: Double(150)),
+        BarChartDataEntry(x:Double(10), y: Double(130)),
+        BarChartDataEntry(x:Double(11), y: Double(200)),
+        BarChartDataEntry(x:Double(12), y: Double(70)),
+        BarChartDataEntry(x:Double(13), y: Double(40)),
+        BarChartDataEntry(x:Double(14), y: Double(150)),
+        BarChartDataEntry(x:Double(15), y: Double(180)),
+        BarChartDataEntry(x:Double(16), y: Double(200)),
+        BarChartDataEntry(x:Double(17), y: Double(170)),
+        BarChartDataEntry(x:Double(18), y: Double(60)),
+        BarChartDataEntry(x:Double(19), y: Double(30)),
+        BarChartDataEntry(x:Double(20), y: Double(80)),
+        BarChartDataEntry(x:Double(21), y: Double(120)),
+        BarChartDataEntry(x:Double(22), y: Double(40)),
+        BarChartDataEntry(x:Double(23), y: Double(90))
+        
+    ]
+    
+    let Presente = UIColor(named: "BarChartsPresent")?.withAlphaComponent(0.5)
+    let Pasado = UIColor(named: "BarChartsPast")
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        setData()
+        
+    }
+    
+    func setData(){
+        
+        let set1 = BarChartDataSet(entries: yValues, label: "2022")
+        let set2 = BarChartDataSet(entries: xValues, label: "2021")
+        
+        set1.colors =  [NSUIColor(cgColor: Presente!.cgColor)]
+        set2.colors =  [NSUIColor(cgColor: Pasado!.cgColor)]
+        
+        let data = BarChartData(dataSets: [set2, set1])
+        barChartView.data = data
+        data.setDrawValues(false)
+        
+        barChartView.rightAxis.enabled = false
+        barChartView.leftAxis.enabled = false
+        //barChartView.bot
+        
+        barChartView.xAxis.labelPosition = .bottom
+        barChartView.pinchZoomEnabled = false
+        
+       // barChartView.xAxis.
+        
+       // barChartView.isPinchZoomEnabled
+        
+       // barChartView.animate(xAxisDuration: 2.5)
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -355,14 +446,17 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
     //MARK: Control para ejecutar el calculo de fechas según su segmentación
     @IBAction func ctrlButton(_ sender: Any){
         
+        //MARK: Switch to select segmented button
         switch SgtRangoFecha.selectedSegmentIndex {
             
         case 0:
+            
             txtFechaPresente.isEnabled = false
             txtFechaPasada.isEnabled = false
             ConsultaServer(fechaStart: helper.fechaFormatoQuery()! , fechaEnd: helper.SubstractFormatOneYear()!)
             self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
             self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
+            self.lblTitlePerTime.text = "Ventas por hora"
             break
         case 1:
             txtFechaPresente.isEnabled = false
@@ -377,6 +471,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
             
             txtFechaPresente.text = helper.ConvierteDateAString(Fecha: dateStart)! + " - " + helper.ConvierteDateAString(Fecha: dateEnd)!
             txtFechaPasada.text = "vs. " + helper.ConvierteDateAString(Fecha: pastYearDateStart)! + " - " + helper.ConvierteDateAString(Fecha: pastYearDateEnd)!
+            self.lblTitlePerTime.text = "Ventas por día"
             break
         case 2:
             txtFechaPresente.isEnabled = false
@@ -401,6 +496,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
             
             txtFechaPresente.text = helper.ConvierteDateAString(Fecha:startOfMonth)! + " - " + helper.ConvierteDateAString(Fecha:endOfMonth)!
             txtFechaPasada.text = "vs. " + helper.ConvierteDateAString(Fecha:pastStartMonthYear)! + " - " + helper.ConvierteDateAString(Fecha:pastEndMonthYear)!
+            self.lblTitlePerTime.text = "Ventas por mes"
             break
             
         case 3:
@@ -418,12 +514,13 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
             break
             
         default:
-            
+            setData()
             txtFechaPresente.isEnabled = false
             txtFechaPasada.isEnabled = false
             ConsultaServer(fechaStart: "2022/11/16" , fechaEnd: "2021/11/16")
             self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
             self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
+            self.lblTitlePerTime.text = "Ventas por hora"
             break
         }
         
@@ -482,7 +579,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
                     }
                     
                     let jsonQuery = try? JSONDecoder().decode(Consulta.self, from: data)
-                    
+                    print(jsonQuery)
                     guard let parsedJSON = jsonQuery else{
                         spinningActivity?.hide(true)
                         print("Error de parseo")
@@ -503,7 +600,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
                     lblPastTicketProm.text =  "$" + parsedJSON.past.TicketPromedio as String?
                     lblPastUtilidad.text = (parsedJSON.past.utilidad as String?)! + "%"
                     
-                    
+                    setData()
                     
                     
                     lblLastDownload.text = "Última actualización  "+helper.detectFullDate()!
