@@ -37,7 +37,7 @@ class TiendasViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dateDay = helper.fechaFormatoQuery()!
+        dateDay = helper.formatDateQuery()!
         
         txtFechaPresente.isEnabled = false
         txtFechaPasada.isEnabled = false
@@ -45,8 +45,8 @@ class TiendasViewController: UIViewController, UITableViewDataSource, UITableVie
         SgtRangoFecha.backgroundColor = .systemGroupedBackground
         SgtRangoFecha.setTitleTextAttributes( [NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         
-        self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
-        self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
+        self.txtFechaPresente.text = helper.detectAndConvertDate()
+        self.txtFechaPasada.text = "vs. "+helper.substractOneYear()!
         
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.default
@@ -209,8 +209,8 @@ class TiendasViewController: UIViewController, UITableViewDataSource, UITableVie
             txtFechaPresente.isEnabled = false
             txtFechaPasada.isEnabled = false
             
-            self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
-            self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
+            self.txtFechaPresente.text = helper.detectAndConvertDate()
+            self.txtFechaPasada.text = "vs. "+helper.substractOneYear()!
             break
             
         case 1:
@@ -224,8 +224,8 @@ class TiendasViewController: UIViewController, UITableViewDataSource, UITableVie
             let pastYearDateStart: Date = pastYear.startOfWeek!
             let pastYearDateEnd: Date = pastYear.endOfWeek!
             
-            txtFechaPresente.text = helper.ConvierteDateAString(Fecha: dateStart)! + " - " + helper.ConvierteDateAString(Fecha: dateEnd)!
-            txtFechaPasada.text = "vs. " + helper.ConvierteDateAString(Fecha: pastYearDateStart)! + " - " + helper.ConvierteDateAString(Fecha: pastYearDateEnd)!
+            txtFechaPresente.text = helper.convertDateToString(Fecha: dateStart)! + " - " + helper.convertDateToString(Fecha: dateEnd)!
+            txtFechaPasada.text = "vs. " + helper.convertDateToString(Fecha: pastYearDateStart)! + " - " + helper.convertDateToString(Fecha: pastYearDateEnd)!
             break
             
         case 2:
@@ -249,8 +249,8 @@ class TiendasViewController: UIViewController, UITableViewDataSource, UITableVie
             let pastStartMonthYear: Date = Calendar.current.date(byAdding: .year, value: -1, to: startOfMonth)!
             let pastEndMonthYear: Date = Calendar.current.date(byAdding: .year, value: -1, to: endOfMonth)!
             
-            txtFechaPresente.text = helper.ConvierteDateAString(Fecha:startOfMonth)! + " - " + helper.ConvierteDateAString(Fecha:endOfMonth)!
-            txtFechaPasada.text = "vs. " + helper.ConvierteDateAString(Fecha:pastStartMonthYear)! + " - " + helper.ConvierteDateAString(Fecha:pastEndMonthYear)!
+            txtFechaPresente.text = helper.convertDateToString(Fecha:startOfMonth)! + " - " + helper.convertDateToString(Fecha:endOfMonth)!
+            txtFechaPasada.text = "vs. " + helper.convertDateToString(Fecha:pastStartMonthYear)! + " - " + helper.convertDateToString(Fecha:pastEndMonthYear)!
             break
             
         case 3:
@@ -258,8 +258,8 @@ class TiendasViewController: UIViewController, UITableViewDataSource, UITableVie
             txtFechaPasada.isEnabled = true
             
             txtFechaPresente.becomeFirstResponder()
-            self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
-            self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
+            self.txtFechaPresente.text = helper.detectAndConvertDate()
+            self.txtFechaPasada.text = "vs. "+helper.substractOneYear()!
             
             if txtFechaPresente.isEnabled && txtFechaPasada.isEnabled == false{
                 txtFechaPresente.isEnabled = true
@@ -270,8 +270,8 @@ class TiendasViewController: UIViewController, UITableViewDataSource, UITableVie
         default:
             txtFechaPresente.isEnabled = false
             txtFechaPasada.isEnabled = false
-            self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
-            self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
+            self.txtFechaPresente.text = helper.detectAndConvertDate()
+            self.txtFechaPasada.text = "vs. "+helper.substractOneYear()!
             break
         }
     }

@@ -35,7 +35,7 @@ class Helper{
     }
     
     //MARK: Consutrcción del body que el backend requiere
-    func BodyLogin(usr: String, psswd: String) -> String{
+    func bodyLogin(usr: String, psswd: String) -> String{
         
         var body: String = ""
         
@@ -101,7 +101,7 @@ class Helper{
     }
     
     //MARK: Conversión de formatos de fecha
-    func convierteStringEnFechaString(laFecha: String) -> String{
+    func convertStringToDateString(laFecha: String) -> String{
         
         let fecha = laFecha
         let dateFormatter = DateFormatter()
@@ -115,7 +115,7 @@ class Helper{
         
     }
     
-    func fechaFormatoQuery()-> String?{
+    func formatDateQuery()-> String?{
         
         let date = Date()
         let dateFormatter = DateFormatter()
@@ -138,7 +138,7 @@ class Helper{
     }
     
     //MARK: Establece el formato de una fecha
-    func formatoFecha(fecha : String) -> Date?{
+    func formatDate(fecha : String) -> Date?{
         
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "GMT-5")
@@ -149,7 +149,7 @@ class Helper{
     }
     
     //MARK: Detecta la fecha y establece el formato
-    func DetectaYConvierteFecha()-> String?{
+    func detectAndConvertDate()-> String?{
         
         let date = Date()
         let dateFormatter = DateFormatter()
@@ -170,7 +170,7 @@ class Helper{
     }
     
     //MARK: Conversor de fecha
-    func ConvierteDateAString(Fecha: Date) -> String?{
+    func convertDateToString(Fecha: Date) -> String?{
         let date = Fecha
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMMM yyyy"
@@ -180,7 +180,7 @@ class Helper{
     }
     
     //MARK: Resta un año a la fecha
-    func SubstractOneYear()-> String?{
+    func substractOneYear()-> String?{
         
         let date = Calendar.current.date(byAdding: .year, value: -1, to: Date())
         let dateFormatter = DateFormatter()
@@ -192,7 +192,7 @@ class Helper{
     }
     
     //MARK: Resta un año a la fecha
-    func SubstractFormatOneYear()-> String?{
+    func substractFormatOneYear()-> String?{
         
         let date = Calendar.current.date(byAdding: .year, value: -1, to: Date())
         let dateFormatter = DateFormatter()
@@ -204,7 +204,7 @@ class Helper{
     }
     
     //MARK: Resta una año a una fecha selectiva
-    func SubstractSelectiveOneYear(Year:Date)-> String?{
+    func substractSelectiveOneYear(Year:Date)-> String?{
         
         let date = Calendar.current.date(byAdding: .year, value: -1, to: Year)
         let dateFormatter = DateFormatter()

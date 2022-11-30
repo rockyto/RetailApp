@@ -101,7 +101,7 @@ class ConsultaModelo: NSObject {
                 let PzaxTicket = jsonElement["PzaxTicket"]
                 let TicketPromedio = jsonElement["TicketProm"]
                 
-                let fechaJSON = helper.convierteStringEnFechaString(laFecha: Fecha as! String)
+                let fechaJSON = helper.convertStringToDateString(laFecha: Fecha as! String)
                 
                 detalle.Fecha = fechaJSON
                 detalle.Sucursal = Sucursal as? String

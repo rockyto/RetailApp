@@ -91,7 +91,7 @@ class ViewController: UIViewController {
     func LoginRetail(){
         
         let url = URL(string: helper.host+"login")!
-        let body = helper.BodyLogin(usr: txtUserLogin.text!, psswd: txtPsswdLogin.text!)
+        let body = helper.bodyLogin(usr: txtUserLogin.text!, psswd: txtPsswdLogin.text!)
         print(body)
         
         var request = URLRequest(url: url)

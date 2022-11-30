@@ -102,8 +102,8 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
         SgtRangoFecha.backgroundColor = .systemGroupedBackground
         SgtRangoFecha.setTitleTextAttributes( [NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         
-        self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
-        self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
+        self.txtFechaPresente.text = helper.detectAndConvertDate()
+        self.txtFechaPasada.text = "vs. "+helper.substractOneYear()!
         
         let toolStartBar = toolBars()
         let toolEndBar = toolBars()
@@ -137,7 +137,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
         
         txtFechaPresente.inputView = pickerFechaStart
         txtFechaPasada.inputView = pickerFechaEnd
-        ConsultaServer(fechaStart: helper.fechaFormatoQuery()! , fechaEnd: helper.SubstractFormatOneYear()!)
+        ConsultaServer(fechaStart: helper.formatDateQuery()! , fechaEnd: helper.substractFormatOneYear()!)
         
         let doneEndButton = UIBarButtonItem(title: "ListoEnd", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.doneEndPicker))
         toolEndBar.setItems([doneEndButton], animated: false)
@@ -261,7 +261,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
         //Si la fecha está vacia y se asigna el dato nos vamos al txtFechaPasada
         if dateStartString == "" {
             
-            dateStartString = helper.fechaFormatoQuery()!
+            dateStartString = helper.formatDateQuery()!
             print("dateStartString desde condición: ", dateStartString)
             self.txtFechaPasada.becomeFirstResponder()
             
@@ -453,9 +453,9 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
             
             txtFechaPresente.isEnabled = false
             txtFechaPasada.isEnabled = false
-            ConsultaServer(fechaStart: helper.fechaFormatoQuery()! , fechaEnd: helper.SubstractFormatOneYear()!)
-            self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
-            self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
+            ConsultaServer(fechaStart: helper.formatDateQuery()! , fechaEnd: helper.substractFormatOneYear()!)
+            self.txtFechaPresente.text = helper.detectAndConvertDate()
+            self.txtFechaPasada.text = "vs. "+helper.substractOneYear()!
             self.lblTitlePerTime.text = "Ventas por hora"
             break
         case 1:
@@ -469,8 +469,8 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
             let pastYearDateStart: Date = pastYear.startOfWeek!
             let pastYearDateEnd: Date = pastYear.endOfWeek!
             
-            txtFechaPresente.text = helper.ConvierteDateAString(Fecha: dateStart)! + " - " + helper.ConvierteDateAString(Fecha: dateEnd)!
-            txtFechaPasada.text = "vs. " + helper.ConvierteDateAString(Fecha: pastYearDateStart)! + " - " + helper.ConvierteDateAString(Fecha: pastYearDateEnd)!
+            txtFechaPresente.text = helper.convertDateToString(Fecha: dateStart)! + " - " + helper.convertDateToString(Fecha: dateEnd)!
+            txtFechaPasada.text = "vs. " + helper.convertDateToString(Fecha: pastYearDateStart)! + " - " + helper.convertDateToString(Fecha: pastYearDateEnd)!
             self.lblTitlePerTime.text = "Ventas por día"
             break
         case 2:
@@ -494,8 +494,8 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
             let pastStartMonthYear: Date = Calendar.current.date(byAdding: .year, value: -1, to: startOfMonth)!
             let pastEndMonthYear: Date = Calendar.current.date(byAdding: .year, value: -1, to: endOfMonth)!
             
-            txtFechaPresente.text = helper.ConvierteDateAString(Fecha:startOfMonth)! + " - " + helper.ConvierteDateAString(Fecha:endOfMonth)!
-            txtFechaPasada.text = "vs. " + helper.ConvierteDateAString(Fecha:pastStartMonthYear)! + " - " + helper.ConvierteDateAString(Fecha:pastEndMonthYear)!
+            txtFechaPresente.text = helper.convertDateToString(Fecha:startOfMonth)! + " - " + helper.convertDateToString(Fecha:endOfMonth)!
+            txtFechaPasada.text = "vs. " + helper.convertDateToString(Fecha:pastStartMonthYear)! + " - " + helper.convertDateToString(Fecha:pastEndMonthYear)!
             self.lblTitlePerTime.text = "Ventas por mes"
             break
             
@@ -504,8 +504,8 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
             txtFechaPasada.isEnabled = true
             
             txtFechaPresente.becomeFirstResponder()
-            self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
-            self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
+            self.txtFechaPresente.text = helper.detectAndConvertDate()
+            self.txtFechaPasada.text = "vs. "+helper.substractOneYear()!
             
             if txtFechaPresente.isEnabled && txtFechaPasada.isEnabled == false{
                 txtFechaPresente.isEnabled = true
@@ -518,8 +518,8 @@ class HomeViewController: UIViewController, UITextFieldDelegate, ChartViewDelega
             txtFechaPresente.isEnabled = false
             txtFechaPasada.isEnabled = false
             ConsultaServer(fechaStart: "2022/11/16" , fechaEnd: "2021/11/16")
-            self.txtFechaPresente.text = helper.DetectaYConvierteFecha()
-            self.txtFechaPasada.text = "vs. "+helper.SubstractOneYear()!
+            self.txtFechaPresente.text = helper.detectAndConvertDate()
+            self.txtFechaPasada.text = "vs. "+helper.substractOneYear()!
             self.lblTitlePerTime.text = "Ventas por hora"
             break
         }
